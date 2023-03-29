@@ -33,7 +33,10 @@ function Signup() {
           </Grid>
         )}
 
-        <Grid item xs={12} md={5} >
+        <Grid item xs={12} md={6} sx={{ml:{
+            sx:0,
+            md: 10
+        }}}>
           <Typography variant="h6" gutterBottom>
             Enter your email address and password to login to your account.
           </Typography>
@@ -42,7 +45,7 @@ function Signup() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  label="Email"
+                  label="Enter Name"
                   variant="outlined"
                   fullWidth
                   required
@@ -50,7 +53,24 @@ function Signup() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Password"
+                  label="Enter Email"
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Enter Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Re-Enter Password"
                   type="password"
                   variant="outlined"
                   fullWidth
