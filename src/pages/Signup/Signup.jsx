@@ -33,7 +33,7 @@ function Signup() {
           </Grid>
         )}
 
-        <Grid item xs={12} md={5} ml={10}>
+        <Grid item xs={12} md={5} >
           <Typography variant="h6" gutterBottom>
             Enter your email address and password to login to your account.
           </Typography>
