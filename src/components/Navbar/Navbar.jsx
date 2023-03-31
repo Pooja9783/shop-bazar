@@ -55,7 +55,7 @@ const Navbar = () => {
                 <Tab label="Products" onClick={() => navigate("/products")} />
                 <Tab label="About Us" onClick={() => navigate("/about-us")}/>
                 <Tab label="Contact" onClick={() => navigate("/contacts")}/>
-                <Tab label="Cart" onClick={() => navigate("/")}/>
+                <Tab label="Cart" onClick={() => navigate("/cart")}/>
 
               </Tabs>
               <Button

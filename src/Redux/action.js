@@ -13,4 +13,4 @@ const apiData = () => async (dispatch) => {
     .catch((e) => console.log(e.message));
 };
 
-export default apiData;
+export { apiData };

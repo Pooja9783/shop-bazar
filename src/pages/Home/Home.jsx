@@ -4,7 +4,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import SimpleImageSlider from "react-simple-image-slider";
-import apiData from "../../Redux/action";
+import {apiData} from "../../Redux/action";
 
 import { Box, Typography, Paper } from "@mui/material";
 
