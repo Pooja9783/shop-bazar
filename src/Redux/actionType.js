@@ -1,2 +1,5 @@
 export  const GET_API_DATA = 'GET_API_DATA';
-export  const SORT_DATA = 'SORT_DATA';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const UPDATE_CART_COUNT = 'UPDATE_CART_COUNT';
+export const INCREMENT_CART_COUNT = 'INCREMENT_CART_COUNT';
+export const DECREMENT_CART_COUNT = 'DECREMENT_CART_COUNT';

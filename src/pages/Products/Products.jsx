@@ -14,7 +14,10 @@ import {
 } from "@mui/material";
 
 import { useNavigate, Link } from "react-router-dom";
-import { apiData } from "../../Redux/action";
+import {
+  apiData,
+ addToCart
+} from "../../Redux/action";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -22,34 +25,25 @@ export default function Products() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("relevance");
   const [sortOrder, setSortOrder] = useState("relevance");
+  const [quantity, setQuantity] = useState(0);
 
-
-//getting data from redux store
+  //getting data from redux store
   const getAPIdata = useSelector((state) => state.data.data);
+  const addCartCount = useSelector((state) => state.cartCount);
   useEffect(() => {
     dispatch(apiData());
   }, [getAPIdata]);
 
- //pagination functionlities
-  let itemsPerPage = 6;
-  const totalPages = Math.ceil(getAPIdata.length / itemsPerPage);
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-//fitering for category
+  //fitering for category
   const filteredProducts = getAPIdata.filter((product) => {
     if (selectedCategory === "relevance") {
       return true;
-    }   
-    else {
+    } else {
       return product.category === selectedCategory;
     }
   });
 
-//sorting for price
+  //sorting for price
   const sortedProducts = filteredProducts.sort((a, b) => {
     if (sortOrder === "relevance") {
       return a;
@@ -59,6 +53,29 @@ export default function Products() {
       return b.price - a.price;
     }
   });
+
+  //pagination functionlities
+  let itemsPerPage = 5;
+  const totalPages = Math.ceil(getAPIdata.length / itemsPerPage);
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  //add to cart function
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product))
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+  const handleIncreaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
 
   return (
     <>
@@ -99,7 +116,6 @@ export default function Products() {
               <MenuItem value="men's clothing">Men's clothing</MenuItem>
               <MenuItem value="women's clothing">Women's clothing</MenuItem>
               <MenuItem value="electronics">Electronics</MenuItem>
-
             </Select>
           </FormControl>
         </Box>
@@ -114,7 +130,9 @@ export default function Products() {
                       key={element.id}
                       item
                       xs={12}
-                      sm={4}
+                      sm={6}
+                      md={4}
+
                       sx={{
                         display: "flex",
                         flexWrap: "wrap",
@@ -138,25 +156,31 @@ export default function Products() {
                               width={150}
                               height={150}
                             />
-                            <Typography variant="body1">
+                            <Typography variant="body1"
+                            sx={{textOverflow:'ellipsis',
+                          overflow:'hidden',
+                          whiteSpace:'nowrap'
+                          }}
+                            
+                            >
                               {element.title}
                             </Typography>
                             <Typography variant="h6">
-                              {element.price}
+                             Rs. {element.price}
                             </Typography>
                           </Box>
                         </Link>
                         <Button
-                          sx={{
-                            margin: "10px",
-                            bgcolor: "#D97D54",
-                            "&:hover": { bgcolor: "#D97D54" },
-                          }}
-                          onClick={() => navigate("/cart")}
-                          variant="contained"
-                        >
-                          Add to Cart
-                        </Button>
+                            sx={{
+                              margin: "10px",
+                              bgcolor: "#D97D54",
+                              "&:hover": { bgcolor: "#D97D54" },
+                            }}
+                            onClick={()=>handleAddToCart(element)}
+                            variant="contained"
+                          >
+                            Add to Cart
+                          </Button>
                       </Paper>
                     </Grid>
                   </>
