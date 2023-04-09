@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   AppBar,
@@ -16,6 +17,9 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import DrawerComp from "./Drawer";
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const cartData = useSelector((state) => state.data.cart);
 
   const [value, setValue] = useState();
   const theme = useTheme();
@@ -25,7 +29,7 @@ const Navbar = () => {
 
   return (
     <React.Fragment>
-      <AppBar sx={{ background: "#211f1b" }} >
+      <AppBar sx={{ background: "#211f1b" }}>
         <Toolbar>
           <StorefrontIcon
             sx={{ transform: "scale(2)" }}
@@ -53,10 +57,20 @@ const Navbar = () => {
               >
                 <Tab label="Home" onClick={() => navigate("/home")} />
                 <Tab label="Products" onClick={() => navigate("/products")} />
-                <Tab label="About Us" onClick={() => navigate("/about-us")}/>
-                <Tab label="Contact" onClick={() => navigate("/contacts")}/>
-                <Tab label="Cart" onClick={() => navigate("/cart")}/>
-
+                <Tab label="About Us" onClick={() => navigate("/about-us")} />
+                <Tab label="Contact" onClick={() => navigate("/contacts")} />
+                <Tab label="Cart" onClick={() => navigate("/cart")} />
+                <Typography
+                  sx={{
+                    background: "orange",
+                    height: "20px",
+                    width: "20px",
+                    padding: "4px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  {cartData.length}
+                </Typography>
               </Tabs>
               <Button
                 sx={{
@@ -76,7 +90,6 @@ const Navbar = () => {
                   "&:hover": { bgcolor: "#D97D54" },
                 }}
                 onClick={() => navigate("/sing-up")}
-
                 variant="contained"
               >
                 SignUp

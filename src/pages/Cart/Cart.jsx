@@ -1,20 +1,22 @@
-import React, {useState} from "react";
-import {
-  Grid,
-  Box,
-  Typography,
-  Paper,
-  Stack,
-  Button,
-
-} from "@mui/material";
+import React, { useState } from "react";
+import { Grid, Box, Typography, Paper, Stack, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { removeToCart, incrementQuantity } from "../../Redux/action";
 export default function Cart() {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   const cartData = useSelector((state) => state.data.cart);
+  const quantity = useSelector((state) => state.data.quantity);
 
-  console.log(cartData);
+  // console.log(quantities);
+  const handleIncrementCardItem = (itemId) => {
+    dispatch(incrementQuantity(itemId));
+  };
+
+  const handleRemoveCardItem = (itemId) => {
+    dispatch(removeToCart(itemId));
+  };
+
   return (
     <Grid>
       <Box mx={4} my={15}>
@@ -71,12 +73,28 @@ export default function Cart() {
                         {quantity * product.price}
                       </Typography>
                       <Box sx={{ display: "flex" }}>
-                        <Button variant='outlined'  sx={{width:"10px", height:"30px"}}>-</Button>
+                        <Button
+                          variant="outlined"
+                          sx={{ width: "10px", height: "30px" }}
+                        >
+                          -
+                        </Button>
                         <Typography variant="body1">{quantity}</Typography>
-                        <Button variant='outlined' sx={{width:"10px", height:"30px"}}>+</Button>
+                        <Button
+                          variant="outlined"
+                          sx={{ width: "10px", height: "30px" }}
+                          onClick={()=> handleIncrementCardItem(product.id)}
+                        >
+                          +
+                        </Button>
                       </Box>
-                      <Button variant='contained' sx={{width:"auto", height:"40px"}}>Remove Product</Button>
-
+                      <Button
+                        variant="contained"
+                        sx={{ width: "auto", height: "40px" }}
+                        onClick={() => handleRemoveCardItem(product.id)}
+                      >
+                        Remove Product
+                      </Button>
                     </Stack>
                   </Paper>
                 </>

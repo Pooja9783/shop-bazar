@@ -14,10 +14,7 @@ import {
 } from "@mui/material";
 
 import { useNavigate, Link } from "react-router-dom";
-import {
-  apiData,
- addToCart
-} from "../../Redux/action";
+import { apiData, addToCart, removeToCart } from "../../Redux/action";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -29,10 +26,17 @@ export default function Products() {
 
   //getting data from redux store
   const getAPIdata = useSelector((state) => state.data.data);
-  const addCartCount = useSelector((state) => state.cartCount);
+  const cartData = useSelector((state) => state.data.cart);
+
+
   useEffect(() => {
     dispatch(apiData());
   }, [getAPIdata]);
+
+  // remove card data
+  const handleRemoveCardItem = (itemId) => {
+    dispatch(removeToCart(itemId));
+  };
 
   //fitering for category
   const filteredProducts = getAPIdata.filter((product) => {
@@ -65,7 +69,7 @@ export default function Products() {
 
   //add to cart function
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
+    dispatch(addToCart(product));
   };
 
   const handleDecreaseQuantity = () => {
@@ -132,7 +136,6 @@ export default function Products() {
                       xs={12}
                       sm={6}
                       md={4}
-
                       sx={{
                         display: "flex",
                         flexWrap: "wrap",
@@ -156,28 +159,31 @@ export default function Products() {
                               width={150}
                               height={150}
                             />
-                            <Typography variant="body1"
-                            sx={{textOverflow:'ellipsis',
-                          overflow:'hidden',
-                          whiteSpace:'nowrap'
-                          }}
-                            
+                            <Typography
+                              variant="body1"
+                              sx={{
+                                textOverflow: "ellipsis",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                              }}
                             >
                               {element.title}
                             </Typography>
                             <Typography variant="h6">
-                             Rs. {element.price}
+                              Rs. {element.price}
                             </Typography>
                           </Box>
                         </Link>
+
                         <Button
                             sx={{
                               margin: "10px",
                               bgcolor: "#D97D54",
                               "&:hover": { bgcolor: "#D97D54" },
                             }}
-                            onClick={()=>handleAddToCart(element)}
+                            onClick={() => handleAddToCart(element)}
                             variant="contained"
+                            disabled={cartData === 1 && true}
                           >
                             Add to Cart
                           </Button>
