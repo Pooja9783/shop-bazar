@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Typography,
   Grid,
@@ -6,7 +6,7 @@ import {
   Button,
   ImageListItem,
 } from "@mui/material";
-
+import { useNavigate } from "react-router";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -15,21 +15,29 @@ import { SignUpContext } from "../../contextApi/SignUpContextApi";
 
 function Signup() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const { addUser } = useContext(SignUpContext);
+  const { setSignUpInfo, handleSignUp } = useContext(SignUpContext);
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
 
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      handleSignUp(user.username, user.email, user.password);
+    }
+  }, [handleSignUp]);
 
   const handleSubmit = (event) => {
-   event.preventDefault();
-   const newUser = {username, email, password};
-   addUser(newUser);
-  }
-
-
+    event.preventDefault();
+    handleSignUp(
+      event.target.username.value,
+      event.target.email.value,
+      event.target.password.value
+    );
+    setSignUpInfo( event.target.username.value)
+    navigate("/login");
+  };
 
   return (
     <div
@@ -63,14 +71,14 @@ function Signup() {
             Enter your email address and password to login to your account.
           </Typography>
 
-          <form style={{ marginTop: theme.spacing(2) }}>
+          <form style={{ marginTop: theme.spacing(2) }} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  type="text"
                   label="Enter Name"
                   variant="outlined"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  name="username"
                   fullWidth
                   required
                 />
@@ -79,8 +87,7 @@ function Signup() {
                 <TextField
                   label="Enter Email"
                   variant="outlined"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                   fullWidth
                   required
                 />
@@ -90,24 +97,15 @@ function Signup() {
                   label="Enter Password"
                   type="password"
                   variant="outlined"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
                   fullWidth
                   required
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Re-Enter Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
+
               <Grid item xs={12}>
                 <Button
-                onClick={handleSubmit}
+                  type="submit"
                   variant="contained"
                   sx={{
                     bgcolor: "#D97D54",

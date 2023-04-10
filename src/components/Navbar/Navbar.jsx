@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   AppBar,
@@ -17,10 +17,10 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import DrawerComp from "./Drawer";
 const Navbar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const cartData = useSelector((state) => state.data.cart);
-
+  let userData = JSON.parse(localStorage.getItem("user"));
+  console.log(userData?.username);
   const [value, setValue] = useState();
   const theme = useTheme();
   // console.log(theme);
@@ -72,28 +72,34 @@ const Navbar = () => {
                   {cartData.length}
                 </Typography>
               </Tabs>
-              <Button
-                sx={{
-                  marginLeft: "auto",
-                  bgcolor: "#D97D54",
-                  "&:hover": { bgcolor: "#D97D54" },
-                }}
-                variant="contained"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Button>
-              <Button
-                sx={{
-                  marginLeft: "10px",
-                  bgcolor: "#D97D54",
-                  "&:hover": { bgcolor: "#D97D54" },
-                }}
-                onClick={() => navigate("/sing-up")}
-                variant="contained"
-              >
-                SignUp
-              </Button>
+              {userData ? (
+                <Typography>{userData?.username}</Typography>
+              ) : (
+                <>
+                  <Button
+                    sx={{
+                      marginLeft: "auto",
+                      bgcolor: "#D97D54",
+                      "&:hover": { bgcolor: "#D97D54" },
+                    }}
+                    variant="contained"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    sx={{
+                      marginLeft: "10px",
+                      bgcolor: "#D97D54",
+                      "&:hover": { bgcolor: "#D97D54" },
+                    }}
+                    onClick={() => navigate("/sing-up")}
+                    variant="contained"
+                  >
+                    SignUp
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Toolbar>

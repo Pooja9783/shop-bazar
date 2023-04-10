@@ -3,28 +3,29 @@ import { createContext, useState, useEffect } from "react";
 export const SignUpContext = createContext();
 
 export const SignUpContextProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
+  const [signUpInfo, setSignUpInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  useEffect(() => {
-    const userFormStorage = localStorage.getItem("users");
-    if (userFormStorage) {
-      setUsers(JSON.parse(userFormStorage));
-    }
-  }, []);
+  const handleSignUp = (username, email, password) => {
+    const user = {
+      username,
+      email,
+      password,
+    };
 
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, []);
+    localStorage.setItem("user", JSON.stringify(user));
 
-  const addUser = (user) => {
-    setUsers([...users, user]);
+    setSignUpInfo(user);
   };
 
   return (
     <>
-      <SignUpContextProvider.Provider value={{users, addUser}}>
+      <SignUpContext.Provider value={{ signUpInfo, setSignUpInfo, handleSignUp }}>
         {children}
-      </SignUpContextProvider.Provider>
+      </SignUpContext.Provider>
     </>
   );
 };
