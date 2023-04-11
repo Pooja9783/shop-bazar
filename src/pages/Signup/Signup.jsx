@@ -6,7 +6,7 @@ import {
   Button,
   ImageListItem,
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -116,6 +116,9 @@ function Signup() {
                   Sign Up
                 </Button>
               </Grid>
+              <Link to='/login'>
+              <Typography>have an account already ?</Typography>
+              </Link>
             </Grid>
           </form>
         </Grid>
