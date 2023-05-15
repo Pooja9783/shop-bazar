@@ -24,9 +24,7 @@ const removeToCart = (id) => ({
 
 const incrementQuantity = (id) => ({
   type: INCREMENT_QUANTITY,
-  payload: id,
-
-
+   payload: id,
 });
 
 const decrementQuantity = (id) => ({

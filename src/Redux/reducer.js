@@ -40,11 +40,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.map((item) =>
-          item.id === action.payload
-            ? { ...item, quantity: item.quantity + 1 }
+          item.id == action.payload
+            ? { ...item, quantity: state.quantity =+ 1 }
             : item
         ),
       };
+
     //remove an item from cart
     case REMOVE_TO_CART:
       return {

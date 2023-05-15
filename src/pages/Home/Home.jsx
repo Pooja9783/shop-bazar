@@ -98,11 +98,11 @@ export default function Home() {
         />
       </Box>
       <Box>
-        <Typography variant="h3" pt={5} sx={{color:"#D97D54"}}>
+        <Typography variant="h3" pt={7} sx={{color:"#D97D54"}}>
           Products
         </Typography>
       </Box>
-      <Box>
+      <Box p={5}>
         <Carousel responsive={responsive}>{setData}</Carousel>
       </Box>
     </>

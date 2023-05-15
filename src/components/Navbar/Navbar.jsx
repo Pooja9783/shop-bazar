@@ -40,20 +40,11 @@ const NameAvatar = styled(Avatar)(({ theme, color }) => ({
 }));
 
 
-
-
-
-
-
-
-
-
 const Navbar = () => {
   const navigate = useNavigate();
 
   const cartData = useSelector((state) => state.data.cart);
   let userData = JSON.parse(localStorage.getItem("user"));
-  console.log(userData?.username);
   const [value, setValue] = useState();
   const theme = useTheme();
   const color = generateColor(userData ? userData?.username : " ");

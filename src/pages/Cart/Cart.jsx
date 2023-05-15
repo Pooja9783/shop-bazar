@@ -1,18 +1,33 @@
-import React, { useState } from "react";
-import { Grid, Box, Typography, Paper, Stack, Button } from "@mui/material";
+import React from "react";
+import {
+  Grid,
+  Box,
+  Typography,
+  Paper,
+  Stack,
+  Button,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { removeToCart, incrementQuantity } from "../../Redux/action";
+import Checkout from "../Checkout/Checkout";
+
 export default function Cart() {
   const dispatch = useDispatch();
-  // const [quantity, setQuantity] = useState(1);
   const cartData = useSelector((state) => state.data.cart);
   const quantity = useSelector((state) => state.data.quantity);
 
-  // console.log(quantities);
+  console.log(quantity);
+
   const handleIncrementCardItem = (itemId) => {
+    console.log('handleIncrement id:', itemId);
     dispatch(incrementQuantity(itemId));
   };
-
   const handleRemoveCardItem = (itemId) => {
     dispatch(removeToCart(itemId));
   };
@@ -20,87 +35,88 @@ export default function Cart() {
   return (
     <Grid>
       <Box mx={4} my={15}>
-        {cartData.length == 0 ? (
+        {cartData.length === 0 ? (
           <Typography variant="h2">Your cart is empty.</Typography>
         ) : (
-          <Box>
-            {cartData?.map((product) => {
-              return (
-                <>
-                  <Paper>
-                    <Stack
-                      direction={{ xs: "column", sm: "row" }}
-                      spacing={{ xs: 1, sm: 2, md: 4 }}
-                      m={3}
-                      p={3}
-                    >
-                      <img
-                        src={product.image}
-                        alt="product-image"
-                        width="100px"
-                        height="100px"
-                      />
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          width: "200px",
-                        }}
-                      >
-                        {product.title}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          width: "100px",
-                        }}
-                      >
-                        RS. {product.price}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          width: "100px",
-                        }}
-                      >
-                        {quantity} x {product.price}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          width: "100px",
-                        }}
-                      >
-                        {quantity * product.price}
-                      </Typography>
-                      <Box sx={{ display: "flex" }}>
+          <>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead sx={{bgcolor:"#e8e4e3"}}>
+                  <TableRow > 
+                    <TableCell sx={{ fontWeight: "bold" }}>Product Image</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Product Name</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Product Price</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Quantity</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Subtotal</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Update Quantity</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Remove Product</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {cartData.map((product) => (
+                    <TableRow key={product.id}>
+                      <TableCell>
+                        <img
+                          src={product.image}
+                          alt="product-image"
+                          width="100px"
+                          height="100px"
+                        />
+                      </TableCell>
+                      <TableCell >
+                        <Typography sx={{
+
+                          width: "200px"
+                        }}>
+                          {product.title}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>RS. {product.price}</TableCell>
+                      <TableCell>{quantity}</TableCell>
+                      <TableCell>
+                        {quantity} X {quantity * product.price}
+                      </TableCell>
+                      <TableCell>
+                        <Stack direction="row" spacing={1}>
+                          <Button
+                            variant="outlined"
+                            size="small"
+
+                          >
+                            -
+                          </Button>
+                          <Typography variant="body1">
+                            {quantity}
+                          </Typography>
+
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => handleIncrementCardItem(product.id)}
+                          >
+                            +
+                          </Button>
+                        </Stack>
+
+                      </TableCell>
+                      <TableCell>
                         <Button
-                          variant="outlined"
-                          sx={{ width: "10px", height: "30px" }}
+                          variant="contained"
+                          size="small"
+                          onClick={() => handleRemoveCardItem(product.id)}
                         >
-                          -
+                          Remove
                         </Button>
-                        <Typography variant="body1">{quantity}</Typography>
-                        <Button
-                          variant="outlined"
-                          sx={{ width: "10px", height: "30px" }}
-                          onClick={()=> handleIncrementCardItem(product.id)}
-                        >
-                          +
-                        </Button>
-                      </Box>
-                      <Button
-                        variant="contained"
-                        sx={{ width: "auto", height: "40px" }}
-                        onClick={() => handleRemoveCardItem(product.id)}
-                      >
-                        Remove Product
-                      </Button>
-                    </Stack>
-                  </Paper>
-                </>
-              );
-            })}
-          </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Box mt={8}>
+            <Checkout />
+            </Box>
+          </>
         )}
       </Box>
     </Grid>
