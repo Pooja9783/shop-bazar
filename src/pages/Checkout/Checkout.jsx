@@ -4,7 +4,7 @@ export default function Checkout() {
   return (
     <>
     <Grid>
-      <Button>Checkout</Button>
+      <Button variant='contained'>Checkout</Button>
       </Grid>
     </>
   )
