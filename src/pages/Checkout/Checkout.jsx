@@ -1,9 +1,11 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { Grid, Button } from '@mui/material'
 export default function Checkout() {
   return (
     <>
+    <Grid>
       <Button>Checkout</Button>
+      </Grid>
     </>
   )
 }

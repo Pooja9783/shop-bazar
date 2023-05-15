@@ -114,7 +114,6 @@ export default function Cart() {
               </Table>
             </TableContainer>
             <Box mt={8}>
-            <Checkout />
             </Box>
           </>
         )}
