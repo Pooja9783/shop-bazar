@@ -17,7 +17,6 @@ export const SignUpContextProvider = ({ children }) => {
     };
 
     localStorage.setItem("user", JSON.stringify(user));
-
     setSignUpInfo(user);
   };
 

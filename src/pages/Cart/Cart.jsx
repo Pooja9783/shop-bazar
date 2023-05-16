@@ -15,8 +15,7 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { removeToCart, incrementQuantity } from "../../Redux/action";
-import Checkout from "../Checkout/Checkout";
-
+import SubTotal from "../../components/SubTotal/SubTotal";
 export default function Cart() {
   const dispatch = useDispatch();
   const cartData = useSelector((state) => state.data.cart);
@@ -113,11 +112,13 @@ export default function Cart() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box mt={8}>
+            <Box mt={4}>
+            <SubTotal quantity={quantity}  />
             </Box>
           </>
         )}
       </Box>
+   
     </Grid>
   );
 }
