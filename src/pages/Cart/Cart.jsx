@@ -33,7 +33,7 @@ export default function Cart() {
 
   return (
     <Grid>
-      <Box mx={4} my={15}>
+      <Box mx={4} my={15} height='100vh'>
         {cartData.length === 0 ? (
           <Typography variant="h2">Your cart is empty.</Typography>
         ) : (

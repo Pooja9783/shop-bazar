@@ -6,7 +6,7 @@ import {
   Button,
   ImageListItem,
 } from "@mui/material";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -20,15 +20,17 @@ function Login() {
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- 
-  const handleSubmit = (event) => {
-    let userData = JSON.parse(localStorage.getItem("user")) || {}
 
+  const handleSubmit = (event) => {
+    let userData = JSON.parse(localStorage.getItem("user")) || {};
+    let user = {
+      email,
+    };
+    localStorage.setItem("isLoggedIn", JSON.stringify(user));
     event.preventDefault();
     if (email === userData.email && password === userData.password) {
       alert("Login successful!");
       navigate("/home");
-
     } else {
       alert("Email or password is incorrect.");
     }
@@ -104,8 +106,8 @@ function Login() {
                   Login
                 </Button>
               </Grid>
-              <Link to='/sign-up'>
-              <Typography>Don't have an account ?</Typography>
+              <Link to="/sign-up">
+                <Typography>Don't have an account ?</Typography>
               </Link>
             </Grid>
           </form>

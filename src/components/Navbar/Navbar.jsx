@@ -44,10 +44,11 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const cartData = useSelector((state) => state.data.cart);
-  let userData = JSON.parse(localStorage.getItem("user"));
+  let userData = JSON.parse(localStorage.getItem("isLoggedIn"));
+  console.log(userData);
   const [value, setValue] = useState();
   const theme = useTheme();
-  const color = generateColor(userData ? userData?.username : " ");
+  const color = generateColor(userData ? userData?.email : " ");
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   // console.log(isMatch);
 
@@ -110,8 +111,8 @@ const Navbar = () => {
               </Tabs>
               {userData ? (
                 <>
-                  <NameAvatar color={color} alt={userData?.username} src="/broken-image.jpg" />
-                  <Typography sx={{m:"0 10px"}}>{userData?.username}</Typography>
+                  <NameAvatar color={color} alt={userData?.email} src="/broken-image.jpg" />
+                  <Typography sx={{m:"0 10px"}}>{userData?.email}</Typography>
                 </>
               ) : (
                 <>
