@@ -16,26 +16,31 @@ import login from "../../assets/login.svg";
 function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
-
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-    let userData = JSON.parse(localStorage.getItem("user")) || {};
+    event.preventDefault();
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    console.log(users);
     let user = {
       email,
     };
-    localStorage.setItem("isLoggedIn", JSON.stringify(user));
-    event.preventDefault();
-    if (email === userData.email && password === userData.password) {
+
+    const userData = users.find(
+      (user) => user.email === email && user.password === password
+    );
+    console.log(userData);
+    if (userData !== undefined) {
+      localStorage.setItem("isLoggedIn", JSON.stringify(userData));
       alert("Login successful!");
       navigate("/home");
     } else {
       alert("Email or password is incorrect.");
     }
   };
-
   return (
     <div
       style={{ padding: theme.spacing(3), width: "80%", margin: "70px auto" }}

@@ -9,22 +9,30 @@ export const SignUpContextProvider = ({ children }) => {
     password: "",
   });
 
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
+    if (storedUsers) {
+      setSignUpInfo(storedUsers[storedUsers.length - 1]);
+    }
+  }, []);
+
   const handleSignUp = (username, email, password) => {
-    const user = {
+    const newUser = {
       username,
       email,
       password,
     };
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const updatedUsers = [...storedUsers, newUser];
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    console.log(updatedUsers);
 
-    localStorage.setItem("user", JSON.stringify(user));
-    setSignUpInfo(user);
+    setSignUpInfo(newUser);
   };
 
   return (
-    <>
-      <SignUpContext.Provider value={{ signUpInfo, setSignUpInfo, handleSignUp }}>
-        {children}
-      </SignUpContext.Provider>
-    </>
+    <SignUpContext.Provider value={{ signUpInfo, setSignUpInfo, handleSignUp }}>
+      {children}
+    </SignUpContext.Provider>
   );
 };
