@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Grid,
   Box,
@@ -14,41 +14,70 @@ import {
   TableRow,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { removeToCart, incrementQuantity } from "../../Redux/action";
+import {
+  removeToCart,
+  incrementQuantity,
+  decrementQuantity,
+  calculateSubtotal,
+} from "../../Redux/action";
 import SubTotal from "../../components/SubTotal/SubTotal";
 export default function Cart() {
   const dispatch = useDispatch();
   const cartData = useSelector((state) => state.data.cart);
-  const quantity = useSelector((state) => state.data.quantity);
+  const subtotalPrice = useSelector((state) => state.data.subtotalPrice);
+  const subtotalItemCount = useSelector((state) => state.data.subtotalItem);
 
-  console.log(quantity);
+  useEffect(() => {
+    dispatch(calculateSubtotal());
+  }, []);
 
+  console.log(subtotalPrice, subtotalItemCount);
   const handleIncrementCardItem = (itemId) => {
-    console.log('handleIncrement id:', itemId);
     dispatch(incrementQuantity(itemId));
+    dispatch(calculateSubtotal());
+
   };
+
+  const handleDecrementCardItem = (itemId) => {
+    dispatch(decrementQuantity(itemId));
+    dispatch(calculateSubtotal());
+
+  };
+
   const handleRemoveCardItem = (itemId) => {
     dispatch(removeToCart(itemId));
+    dispatch(calculateSubtotal());
+
   };
 
   return (
     <Grid>
-      <Box mx={4} my={15} height='100vh'>
+      <Box mx={4} my={15} height="100vh">
         {cartData.length === 0 ? (
           <Typography variant="h2">Your cart is empty.</Typography>
         ) : (
           <>
             <TableContainer component={Paper}>
               <Table>
-                <TableHead sx={{bgcolor:"#e8e4e3"}}>
-                  <TableRow > 
-                    <TableCell sx={{ fontWeight: "bold" }}>Product Image</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Product Name</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Product Price</TableCell>
+                <TableHead sx={{ bgcolor: "#e8e4e3" }}>
+                  <TableRow>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      Product Image
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      Product Name
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      Product Price
+                    </TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>Quantity</TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>Subtotal</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Update Quantity</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Remove Product</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      Update Quantity
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>
+                      Remove Product
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -62,30 +91,31 @@ export default function Cart() {
                           height="100px"
                         />
                       </TableCell>
-                      <TableCell >
-                        <Typography sx={{
-
-                          width: "200px"
-                        }}>
+                      <TableCell>
+                        <Typography
+                          sx={{
+                            width: "200px",
+                          }}
+                        >
                           {product.title}
                         </Typography>
                       </TableCell>
                       <TableCell>RS. {product.price}</TableCell>
-                      <TableCell>{quantity}</TableCell>
+                      <TableCell>{product.quantity}</TableCell>
                       <TableCell>
-                        {quantity} X {quantity * product.price}
+                        {product.quantity} X {product.quantity * product.price}
                       </TableCell>
                       <TableCell>
                         <Stack direction="row" spacing={1}>
                           <Button
                             variant="outlined"
                             size="small"
-
+                            onClick={() => handleDecrementCardItem(product.id)}
                           >
                             -
                           </Button>
                           <Typography variant="body1">
-                            {quantity}
+                            {product.quantity}
                           </Typography>
 
                           <Button
@@ -96,7 +126,6 @@ export default function Cart() {
                             +
                           </Button>
                         </Stack>
-
                       </TableCell>
                       <TableCell>
                         <Button
@@ -113,12 +142,11 @@ export default function Cart() {
               </Table>
             </TableContainer>
             <Box mt={4}>
-            <SubTotal quantity={quantity}  />
+              <SubTotal subtotalItemCount={subtotalItemCount} subtotalPrice={subtotalPrice}/>
             </Box>
           </>
         )}
       </Box>
-   
     </Grid>
   );
 }
