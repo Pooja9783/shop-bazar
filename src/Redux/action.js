@@ -4,7 +4,8 @@ import {
   REMOVE_TO_CART,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
-  CALCULATE_SUBTOTAL
+  CALCULATE_SUBTOTAL,
+  CLEAR_CART,
 } from "./actionType";
 import axios from "axios";
 
@@ -39,6 +40,11 @@ export const calculateSubtotal = () => {
   };
 };
 
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
+  };
+};
 
 const apiData = () => async (dispatch) => {
   await axios
