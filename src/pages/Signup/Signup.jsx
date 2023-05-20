@@ -35,7 +35,7 @@ function Signup() {
       event.target.email.value,
       event.target.password.value
     );
-    setSignUpInfo( event.target.username.value)
+    setSignUpInfo(event.target.username.value);
     navigate("/login");
   };
 
@@ -116,8 +116,8 @@ function Signup() {
                   Sign Up
                 </Button>
               </Grid>
-              <Link to='/login'>
-              <Typography>have an account already ?</Typography>
+              <Link to="/login">
+                <Typography>have an account already ?</Typography>
               </Link>
             </Grid>
           </form>
