@@ -5,6 +5,7 @@ import {
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
   CALCULATE_SUBTOTAL,
+  CLEAR_CART,
 } from "./actionType";
 
 const initialState = {
@@ -90,7 +91,6 @@ export const reducer = (state = initialState, action) => {
       };
 
     //----------subtotal cart----------
-
     case CALCULATE_SUBTOTAL:
       const cartItems = state.cart;
       const subtotal = cartItems.reduce((total, item) => {
@@ -98,7 +98,7 @@ export const reducer = (state = initialState, action) => {
       }, 0);
 
       const subtotalItemCount = cartItems.reduce((total, item) => {
-        return  Math.floor(total + item.quantity);
+        return Math.floor(total + item.quantity);
       }, 0);
 
       return {
@@ -106,7 +106,13 @@ export const reducer = (state = initialState, action) => {
         subtotalPrice: subtotal,
         subtotalItem: subtotalItemCount,
       };
-    // ...
+
+    //--------Clear Cart------------
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: [], // Set cart to an empty array
+      };
 
     default:
       return state;

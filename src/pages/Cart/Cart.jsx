@@ -21,6 +21,8 @@ import {
   calculateSubtotal,
 } from "../../Redux/action";
 import SubTotal from "../../components/SubTotal/SubTotal";
+
+
 export default function Cart() {
   const dispatch = useDispatch();
   const cartData = useSelector((state) => state.data.cart);
