@@ -4,6 +4,7 @@ import {
   REMOVE_TO_CART,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
+  CALCULATE_SUBTOTAL,
 } from "./actionType";
 
 const initialState = {
@@ -11,15 +12,17 @@ const initialState = {
   cart: [],
   isLoading: false,
   quantity: 1,
+  subtotalPrice: 0,
+  subtotalItem: 0,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // getting api data
+    //-----------getting api data--------
     case GET_API_DATA:
       return { ...state, data: [...action.payload] };
 
-    //add to cart
+    //------------add to cart-----------
     case ADD_TO_CART:
       const newItem = action.payload;
       // Check if item already exists in the cart
@@ -29,29 +32,81 @@ export const reducer = (state = initialState, action) => {
         return state;
       } else {
         // If item does not exist, add it to the cart
+        const updatedItem = {
+          ...newItem,
+          quantity: 1, // Set the initial quantity to 1 or any desired value
+        };
         return {
           ...state,
-          cart: [...state.cart, newItem],
+          cart: [...state.cart, updatedItem],
         };
       }
 
-    //increment quantity of an item
+    //------increment quantity of an item--------
     case INCREMENT_QUANTITY:
-      return {
-        ...state,
-        cart: state.cart.map((item) =>
-          item.id == action.payload
-            ? { ...item, quantity: state.quantity =+ 1 }
-            : item
-        ),
-      };
+      const productId = action.payload;
+      // Find the product in the cart
+      const productIndex = state.cart.findIndex(
+        (item) => item.id === productId
+      );
+      if (productIndex !== -1) {
+        // If product exists, update the quantity by incrementing it
+        const updatedCart = [...state.cart];
+        updatedCart[productIndex].quantity += 1;
 
-    //remove an item from cart
+        return {
+          ...state,
+          cart: updatedCart,
+        };
+      } else {
+        return state;
+      }
+
+    //------decrement quantity of an item--------
+    case DECREMENT_QUANTITY:
+      // Find the product in the cart
+      const prodIndex = state.cart.findIndex(
+        (item) => item.id === action.payload
+      );
+      if (prodIndex !== -1) {
+        // If product exists, check if the quantity is greater than the minimum value
+        if (state.cart[prodIndex].quantity > 1) {
+          // If the quantity is greater than 1, decrement it
+          const updatedCart = [...state.cart];
+          updatedCart[prodIndex].quantity -= 1;
+          return {
+            ...state,
+            cart: updatedCart,
+          };
+        }
+      }
+      return state;
+
+    //----------remove an item from cart----------
     case REMOVE_TO_CART:
       return {
         ...state,
         cart: state.cart.filter((item) => item.id != action.payload),
       };
+
+    //----------subtotal cart----------
+
+    case CALCULATE_SUBTOTAL:
+      const cartItems = state.cart;
+      const subtotal = cartItems.reduce((total, item) => {
+        return Math.floor(total + item.quantity * item.price);
+      }, 0);
+
+      const subtotalItemCount = cartItems.reduce((total, item) => {
+        return  Math.floor(total + item.quantity);
+      }, 0);
+
+      return {
+        ...state,
+        subtotalPrice: subtotal,
+        subtotalItem: subtotalItemCount,
+      };
+    // ...
 
     default:
       return state;

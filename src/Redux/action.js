@@ -4,6 +4,7 @@ import {
   REMOVE_TO_CART,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
+  CALCULATE_SUBTOTAL
 } from "./actionType";
 import axios from "axios";
 
@@ -24,13 +25,20 @@ const removeToCart = (id) => ({
 
 const incrementQuantity = (id) => ({
   type: INCREMENT_QUANTITY,
-   payload: id,
+  payload: id,
 });
 
 const decrementQuantity = (id) => ({
-  type: INCREMENT_QUANTITY,
+  type: DECREMENT_QUANTITY,
   payload: id,
 });
+
+export const calculateSubtotal = () => {
+  return {
+    type: CALCULATE_SUBTOTAL,
+  };
+};
+
 
 const apiData = () => async (dispatch) => {
   await axios

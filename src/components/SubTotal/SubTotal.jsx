@@ -1,25 +1,28 @@
-import React from 'react'
-import { Box, Paper, Typography, Button } from '@mui/material';
+import React from "react";
+import { Box, Paper, Typography, Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
-export default function SubTotal({ quantity }) {
+export default function SubTotal({ subtotalItemCount, subtotalPrice }) {
 
-    return (
-        <Paper element='10' >
+  return (
+    <Paper element="10">
+      <Box sx={{ display: "flex", justifyContent: "end" }} p={5}>
+        <Typography variant="h6">
+          Subtotal : ({subtotalItemCount}
+          {subtotalItemCount > 1 ? " Items" : " Item"})
+         RS. {subtotalPrice}
+        </Typography>
 
-            <Box sx={{ display: "flex", justifyContent: "end" }}  p={5}>
-                <Typography variant='h6'>Subtotal : {quantity}
-                    {
-                        quantity < 1 ? " Items" : " Item"
-                    }
-                </Typography>
-                <Button variant='contained'
-                    sx={{
-                        bgcolor: "#D97D54",
-                        "&:hover": { bgcolor: "#D97D54" },
-                    }}>
-                    Proceed To Pay</Button>
-            </Box>
-        </Paper>
-
-    )
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: "#D97D54",
+            "&:hover": { bgcolor: "#D97D54" },
+          }}
+        >
+          Proceed To Pay
+        </Button>
+      </Box>
+    </Paper>
+  );
 }
