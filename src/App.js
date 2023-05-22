@@ -10,6 +10,7 @@ import Signup from "./pages/Signup/Signup";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import Contacts from "./pages/Contacts/Contacts";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
 import PrivateRoutes from "./privateRoutes/privateRoutes";
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contacts" element={<Contacts />} />
-               
+          <Route path="/checkout" element={<Checkout />} />
+
 
         </Routes>
         <Footer />

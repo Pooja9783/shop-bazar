@@ -102,7 +102,7 @@ export default function Home() {
           Products
         </Typography>
       </Box>
-      <Box p={5}>
+      <Box >
         <Carousel responsive={responsive}>{setData}</Carousel>
       </Box>
     </>

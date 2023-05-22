@@ -113,6 +113,11 @@ export default function Cart() {
                             variant="outlined"
                             size="small"
                             onClick={() => handleDecrementCardItem(product.id)}
+                            sx={{
+                              color:"black",
+                              borderColor: "#D97D54",
+                              "&:hover": { borderColor: "#D97D54" },
+                            }}
                           >
                             -
                           </Button>
@@ -124,6 +129,13 @@ export default function Cart() {
                             variant="outlined"
                             size="small"
                             onClick={() => handleIncrementCardItem(product.id)}
+                            sx={{
+                              color:"black",
+                              borderColor: "#D97D54",
+                              "&:hover": { borderColor: "#D97D54" },
+                            }}
+                            
+
                           >
                             +
                           </Button>
@@ -134,6 +146,10 @@ export default function Cart() {
                           variant="contained"
                           size="small"
                           onClick={() => handleRemoveCardItem(product.id)}
+                          sx={{
+                            bgcolor: "#D97D54",
+                            "&:hover": { bgcolor: "#D97D54" },
+                          }}
                         >
                           Remove
                         </Button>

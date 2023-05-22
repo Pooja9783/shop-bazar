@@ -15,6 +15,7 @@ import {
   Popover,
   Avatar,
   Divider,
+  Grid,
 } from "@mui/material";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { styled } from "@mui/material/styles";
@@ -56,8 +57,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
-    navigate("/login")
-  }
+    navigate("/login");
+  };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -70,11 +71,30 @@ const Navbar = () => {
             sx={{ transform: "scale(2)" }}
             onClick={() => navigate("/home")}
           />
+
           {isMatch ? (
             <>
-              <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>
-                ShopBazar
-              </Typography>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Grid item>
+                  <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>
+                    ShopBazar
+                  </Typography>
+                </Grid>
+                {userData && (
+                  <Grid item>
+                    <NameAvatar
+                      color={color}
+                      alt={userData.email}
+                      src="/broken-image.jpg"
+                      onClick={handleClick}
+                    />
+                  </Grid>
+                )}
+              </Grid>
               <DrawerComp />
             </>
           ) : (
@@ -91,10 +111,9 @@ const Navbar = () => {
                 onChange={(e, value) => setValue(value)}
               >
                 <Tab label="Home" onClick={() => navigate("/home")} />
-
                 <Tab label="Products" onClick={() => navigate("/products")} />
                 <Tab label="About Us" onClick={() => navigate("/about-us")} />
-                <Tab label="Contact" onClick={() => navigate("/contacts")} />
+                <Tab label="Contact Us" onClick={() => navigate("/contacts")} />
                 <Tab label="Cart" onClick={() => navigate("/cart")} />
                 <Box
                   sx={{
@@ -142,7 +161,7 @@ const Navbar = () => {
                         display: "grid",
                         placeItems: "center",
                       }}
-                      width='250px'
+                      width="250px"
                     >
                       <Box p={2}>
                         <NameAvatar

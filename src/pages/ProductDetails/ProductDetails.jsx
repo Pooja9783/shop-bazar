@@ -35,11 +35,11 @@ export default function ProductDetails() {
                   width={190}
                   height={190}
                 />
-                <Typography variant="body2">{element.description}</Typography>
-                <Typography variant="h6">{element.title}</Typography>
-                <Typography variant="h6">{element.price}</Typography>
-                <Typography variant="h6">{element.rating.rate}</Typography>
-                <Button
+                <Typography variant="body2" mt={2}>{element.description}</Typography>
+                <Typography variant="h6" mt={2}>{element.title}</Typography>
+                <Typography variant="h6" mt={2}>RS. {element.price}</Typography>
+                <Typography variant="h6" mt={2}>Rating : {element.rating.rate}</Typography>
+                {/* <Button
                           sx={{
                             margin: "10px",
                             bgcolor: "#D97D54",
@@ -48,7 +48,7 @@ export default function ProductDetails() {
                           variant="contained"
                         >
                           Add to Cart
-                        </Button>
+                        </Button> */}
               </Box>
             </>
           );

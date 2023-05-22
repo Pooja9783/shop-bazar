@@ -125,7 +125,7 @@ export default function Products() {
         </Box>
 
         <Box display="flex" justifyContent="space-around">
-          <Box ml={15}>
+          <Box sx={{ml:{xs:5, md:15}}}>
             <Grid container spacing={2}>
               {sortedProducts?.slice(startIndex, endIndex)?.map((element) => {
                 return (
