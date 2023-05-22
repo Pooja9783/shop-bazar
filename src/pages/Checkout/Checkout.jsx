@@ -1,10 +1,15 @@
 import React from 'react'
-import { Grid, Button } from '@mui/material'
+import { Grid, Button, Typography } from '@mui/material';
+import {  Link } from "react-router-dom";
+
 export default function Checkout() {
   return (
     <>
-    <Grid>
-      <Button variant='contained'>Checkout</Button>
+    <Grid mt={20} height="60vh"> 
+      <Typography variant='h3'>Thank you for shopping...</Typography>
+      <Link to='/products'>
+      <Typography my={5} variant='h5'>Continue for shopping</Typography>
+      </Link>
       </Grid>
     </>
   )

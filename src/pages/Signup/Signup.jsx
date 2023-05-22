@@ -5,6 +5,7 @@ import {
   TextField,
   Button,
   ImageListItem,
+  Box
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -49,9 +50,9 @@ function Signup() {
 
       <Grid container spacing={3} my={3}>
         {!isMobile && (
-          <Grid item md={5} p={2}>
+          <Grid item md={5} mt={1} p={2}>
             <ImageListItem>
-              <img src={login} alt="login" />
+              <img src={login} alt="login"  />
             </ImageListItem>
           </Grid>
         )}
@@ -61,19 +62,16 @@ function Signup() {
           xs={12}
           md={6}
           sx={{
-            ml: {
-              sx: 0,
-              md: 10,
-            },
+           
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" sx={{px:{xs:0, md:4}}}  gutterBottom>
             Enter your email address and password to login to your account.
           </Typography>
 
           <form style={{ marginTop: theme.spacing(2) }} onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+          <Grid container spacing={2} sx={{px:{xs:0, md:4}}}>
+              <Grid item xs={12} >
                 <TextField
                   type="text"
                   label="Enter Name"
@@ -116,9 +114,11 @@ function Signup() {
                   Sign Up
                 </Button>
               </Grid>
-              <Link to="/login">
-                <Typography>have an account already ?</Typography>
+              <Box sx={{ textAlign:"center"}}>
+              <Link to="/login" style={{color:"black"}} >
+                <Typography variant="h6" color='black' m={2} >have an account already ?</Typography>
               </Link>
+              </Box>
             </Grid>
           </form>
         </Grid>

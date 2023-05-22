@@ -40,11 +40,11 @@ export default function SubTotal({ subtotalItemCount, subtotalPrice }) {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi5XNpezkeqEeF-qKZcC9MLpXkaPrHkE7jEQ&usqp=CAU",
 
       handler: function (response) {
+        navigate("/checkout");
         dispatch(clearCart());
-        alert(response.razorpay_payment_id);
         alert("Payment Successful!");
+        alert(response.razorpay_payment_id);
 
-        navigate("/home");
       },
 
       prefill: {

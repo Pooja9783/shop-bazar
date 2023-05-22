@@ -5,6 +5,7 @@ import {
   TextField,
   Button,
   ImageListItem,
+  Box
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -62,19 +63,14 @@ function Login() {
           item
           xs={12}
           md={6}
-          sx={{
-            ml: {
-              sx: 0,
-              md: 10,
-            },
-          }}
+         mt={5}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" px={4} gutterBottom>
             Enter your email address and password to login to your account.
           </Typography>
 
           <form style={{ marginTop: theme.spacing(2) }} onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{px:{xs:0, md:4}}}>
               <Grid item xs={12}>
                 <TextField
                   label="Email"
@@ -111,9 +107,11 @@ function Login() {
                   Login
                 </Button>
               </Grid>
-              <Link to="/sign-up">
-                <Typography>Don't have an account ?</Typography>
+              <Box sx={{ textAlign:"center"}}>
+              <Link to="/sign-up" style={{color:"black"}}>
+                <Typography variant="h6" m={2} color='black' >Don't have an account already ?</Typography>
               </Link>
+              </Box>
             </Grid>
           </form>
         </Grid>
